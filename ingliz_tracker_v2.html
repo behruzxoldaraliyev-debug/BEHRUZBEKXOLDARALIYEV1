@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingliz tili — 75 kun</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --bg:#07070f;
+  --surface:#0f0f1e;
+  --surface2:#161628;
+  --surface3:#1e1e35;
+  --border:rgba(120,100,255,0.12);
+  --border2:rgba(120,100,255,0.22);
+  --text:#f0eeff;
+  --muted:#7c7a9e;
+  --hint:#3a3858;
+  --purple:#9d8fff;
+  --purple2:#7c6ef5;
+  --purple-dim:rgba(157,143,255,0.15);
+  --purple-glow:rgba(157,143,255,0.08);
+  --green:#4ade80;
+  --green-bg:rgba(74,222,128,0.08);
+  --red:#f87171;
+  --red-bg:rgba(248,113,113,0.08);
+  --amber:#fbbf24;
+  --amber-bg:rgba(251,191,36,0.08);
+  --blue:#60a5fa;
+  --pink:#f472b6;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ANIMATED BACKGROUND */
+.bg-canvas{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:0.18;
+  animation:float 12s ease-in-out infinite;
+}
+.orb1{width:500px;height:500px;background:#7c6ef5;top:-100px;left:-100px;animation-delay:0s;}
+.orb2{width:400px;height:400px;background:#f472b6;bottom:-80px;right:-80px;animation-delay:-4s;}
+.orb3{width:300px;height:300px;background:#60a5fa;top:40%;left:60%;animation-delay:-8s;}
+
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(30px,-20px) scale(1.05);}
+  66%{transform:translate(-20px,30px) scale(0.95);}
+}
+
+/* LOGIN */
+#login-screen{
+  position:fixed;inset:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(7,7,15,0.97);
+}
+.login-card{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  padding:2.5rem;
+  width:340px;
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+.login-logo{
+  font-size:48px;
+  margin-bottom:0.5rem;
+}
+.login-title{
+  font-size:22px;
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:4px;
+}
+.login-sub{
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:2rem;
+}
+.login-input{
+  width:100%;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  padding:12px 16px;
+  margin-bottom:12px;
+  outline:none;
+  transition:border 0.2s;
+  letter-spacing:0.1em;
+}
+.login-input:focus{border-color:var(--purple2);}
+.login-btn{
+  width:100%;
+  background:linear-gradient(135deg,var(--purple2),#a855f7);
+  border:none;
+  border-radius:10px;
+  color:#fff;
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  font-weight:600;
+  padding:13px;
+  cursor:pointer;
+  transition:opacity 0.2s, transform 0.1s;
+}
+.login-btn:hover{opacity:0.9;}
+.login-btn:active{transform:scale(0.98);}
+.login-error{
+  color:var(--red);
+  font-size:13px;
+  margin-top:8px;
+  display:none;
+}
+
+/* APP */
+#app{display:none;position:relative;z-index:1;}
+
+.header{
+  background:rgba(15,15,30,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;top:0;z-index:10;
+}
+.header-left{display:flex;align-items:center;gap:12px;}
+.header-logo{
+  font-size:20px;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.header-date{font-size:13px;color:var(--muted);}
+.header-right{display:flex;align-items:center;gap:12px;}
+
+.streak-pill{
+  display:flex;align-items:center;gap:6px;
+  background:var(--purple-dim);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  padding:6px 14px;
+  font-size:14px;font-weight:500;
+  color:var(--purple);
+}
+.logout-btn{
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--muted);
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  padding:6px 12px;
+  cursor:pointer;
+}
+.logout-btn:hover{color:var(--text);border-color:var(--border2);}
+
+.container{max-width:960px;margin:0 auto;padding:2rem 1.5rem;}
+
+/* METRICS */
+.metrics{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin-bottom:1.5rem;
+}
+.metric{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1rem;
+  text-align:center;
+  transition:border 0.2s;
+}
+.metric:hover{border-color:var(--border2);}
+.metric-val{
+  font-size:26px;font-weight:600;
+  font-family:'JetBrains Mono',monospace;
+  line-height:1;margin-bottom:4px;
+}
+.metric-val.purple{background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.metric-val.green{color:var(--green);}
+.metric-val.amber{color:var(--amber);}
+.metric-val.blue{color:var(--blue);}
+.metric-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
+
+/* NAV */
+.nav{
+  display:flex;gap:4px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;padding:4px;
+  margin-bottom:1.5rem;
+  overflow-x:auto;
+}
+.nav-btn{
+  flex:1;min-width:80px;
+  padding:8px 12px;
+  border:none;background:transparent;
+  color:var(--muted);
+  font-family:'Inter',sans-serif;font-size:13px;
+  cursor:pointer;border-radius:8px;
+  transition:all 0.15s;white-space:nowrap;
+}
+.nav-btn.active{background:var(--surface2);color:var(--text);font-weight:500;}
+.nav-btn:hover:not(.active){color:var(--text);}
+
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* CARDS */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1.25rem;
+  margin-bottom:1rem;
+}
+.card-title{
+  font-size:11px;font-weight:500;
+  color:var(--muted);
+  text-transform:uppercase;letter-spacing:0.08em;
+  margin-bottom:1rem;
+  display:flex;align-items:center;gap:6px;
+}
+
+/* TASKS */
+.task-row{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 0;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;transition:opacity 0.15s;
+}
+.task-row:last-child{border-bottom:none;}
+.task-row:hover{opacity:0.8;}
+.cb{
+  width:22px;height:22px;border-radius:6px;
+  border:1.5px solid var(--hint);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all 0.15s;
+}
+.cb.done{background:var(--green);border-color:var(--green);}
+.cb.done::after{content:'';width:5px;height:9px;border:2px solid #07070f;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);display:block;}
+.task-text{font-size:14px;color:var(--text);flex:1;}
+.task-text.done{text-decoration:line-through;color:var(--hint);}
+.task-pts{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+
+/* BUTTONS */
+.btn-main{
+  width:100%;padding:13px;
+  background:linear-gradient(135deg,var(--purple2),#a855f7);
+  border:none;border-radius:10px;
+  color:#fff;font-family:'Inter',sans-serif;
+  font-size:15px;font-weight:600;
+  cursor:pointer;margin-top:1rem;
+  transition:opacity 0.2s,transform 0.1s;
+}
+.btn-main:hover{opacity:0.9;}
+.btn-main:active{transform:scale(0.98);}
+.btn-main:disabled{opacity:0.35;cursor:not-allowed;}
+
+.btn-sec{
+  width:100%;padding:10px;
+  background:transparent;
+  border:1px solid var(--border2);
+  border-radius:10px;
+  color:var(--muted);font-family:'Inter',sans-serif;
+  font-size:14px;cursor:pointer;margin-top:8px;
+  transition:all 0.15s;
+}
+.btn-sec:hover{color:var(--text);background:var(--surface2);}
+
+/* TIMER */
+.timer-big{
+  font-family:'JetBrains Mono',monospace;
+  font-size:64px;font-weight:500;
+  text-align:center;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  padding:1.5rem 0 1rem;
+  letter-spacing:0.04em;
+}
+.prog-wrap{background:var(--surface2);border-radius:4px;height:6px;overflow:hidden;margin-bottom:6px;}
+.prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--purple2),var(--pink));transition:width 1s linear;}
+.prog-txt{font-size:13px;color:var(--muted);text-align:center;margin-bottom:1rem;}
+.timer-btns{display:flex;gap:8px;}
+.tbtn{
+  flex:1;background:var(--surface2);border:1px solid var(--border2);
+  color:var(--text);padding:10px;border-radius:8px;
+  font-family:'Inter',sans-serif;font-size:14px;cursor:pointer;transition:all 0.15s;
+}
+.tbtn:hover{background:var(--surface3);}
+.tbtn.on{background:var(--purple-dim);border-color:var(--border2);color:var(--purple);}
+
+/* DOTS */
+.dots-wrap{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem;}
+.dot{
+  width:14px;height:14px;border-radius:50%;
+  cursor:default;position:relative;
+  transition:transform 0.15s;
+}
+.dot:hover{transform:scale(1.4);}
+.dot::after{
+  content:attr(data-tip);
+  position:absolute;bottom:18px;left:50%;
+  transform:translateX(-50%);
+  background:var(--surface3);border:1px solid var(--border2);
+  color:var(--text);font-size:11px;padding:2px 8px;
+  border-radius:4px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity 0.15s;z-index:5;
+}
+.dot:hover::after{opacity:1;}
+.d-done{background:var(--green);}
+.d-today{background:var(--purple);box-shadow:0 0 0 3px rgba(157,143,255,0.25);}
+.d-missed{background:var(--red);}
+.d-skip{background:var(--surface2);border:1px solid var(--hint);}
+
+.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend span{display:flex;align-items:center;gap:5px;}
+.ld{width:10px;height:10px;border-radius:50%;display:inline-block;}
+
+/* STATS GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:1rem;}
+.stat-box{
+  background:var(--surface2);border-radius:10px;
+  padding:14px;text-align:center;
+}
+.stat-val{font-size:24px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--purple);}
+.stat-label{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* WEEKLY */
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:1rem;}
+.week-day{
+  background:var(--surface2);border-radius:8px;
+  padding:10px 4px;text-align:center;
+}
+.week-day-name{font-size:11px;color:var(--muted);margin-bottom:4px;}
+.week-day-val{font-size:18px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--green);}
+.week-day-val.zero{color:var(--hint);}
+.week-day-val.miss{color:var(--red);}
+
+/* FOIZ */
+.foiz-bar{
+  background:var(--surface2);border-radius:8px;
+  overflow:hidden;height:28px;margin-bottom:8px;
+  position:relative;
+}
+.foiz-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--purple2),var(--pink));
+  border-radius:8px;
+  display:flex;align-items:center;padding-left:12px;
+  font-size:13px;font-weight:500;color:#fff;
+  transition:width 0.8s ease;
+  min-width:40px;
+}
+.foiz-label{font-size:13px;color:var(--muted);margin-bottom:4px;}
+
+/* BOLIMLAR */
+.bolim-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.bolim-card{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:12px;padding:1rem;cursor:pointer;
+  transition:all 0.2s;position:relative;overflow:hidden;
+}
+.bolim-card:hover{border-color:var(--border2);background:var(--surface3);}
+.bolim-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--purple2),var(--pink));
+  opacity:0;transition:opacity 0.2s;
+}
+.bolim-card:hover::before{opacity:1;}
+.bolim-icon{font-size:24px;margin-bottom:8px;}
+.bolim-name{font-size:15px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.bolim-desc{font-size:12px;color:var(--muted);}
+.add-bolim{
+  background:transparent;
+  border:1px dashed var(--hint);
+  border-radius:12px;padding:1rem;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  color:var(--muted);font-size:14px;
+  transition:all 0.2s;
+}
+.add-bolim:hover{border-color:var(--purple2);color:var(--purple);}
+
+/* HAYOT BOLIM */
+.hayot-section{display:none;}
+.hayot-section.active{display:block;}
+.back-btn{
+  background:transparent;border:none;color:var(--purple);
+  font-family:'Inter',sans-serif;font-size:14px;
+  cursor:pointer;padding:0;margin-bottom:1rem;
+  display:flex;align-items:center;gap:4px;
+}
+.hayot-entry{
+  background:var(--surface2);border-radius:10px;
+  padding:12px;margin-bottom:8px;
+  border-left:3px solid var(--purple2);
+}
+.hayot-entry-date{font-size:11px;color:var(--muted);margin-bottom:4px;}
+.hayot-entry-text{font-size:14px;color:var(--text);}
+
+/* NOTE */
+.note-area{
+  width:100%;background:var(--surface2);
+  border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-family:'Inter',sans-serif;
+  font-size:14px;padding:12px;
+  resize:vertical;min-height:100px;outline:none;
+  transition:border 0.2s;
+}
+.note-area:focus{border-color:var(--purple2);}
+
+/* MISSED MODAL */
+.modal-overlay{
+  position:fixed;inset:0;z-index:50;
+  background:rgba(7,7,15,0.85);
+  display:none;align-items:center;justify-content:center;
+}
+.modal-overlay.show{display:flex;}
+.modal{
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:16px;padding:2rem;width:360px;
+  position:relative;z-index:2;
+}
+.modal-title{font-size:18px;font-weight:600;margin-bottom:8px;}
+.modal-sub{font-size:14px;color:var(--muted);margin-bottom:1.5rem;}
+.reason-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.reason-btn{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:10px;
+  color:var(--muted);font-family:'Inter',sans-serif;font-size:13px;
+  cursor:pointer;transition:all 0.15s;
+}
+.reason-btn:hover{border-color:var(--purple2);color:var(--purple);}
+
+/* INPUT */
+.mini-input{
+  width:90px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;
+  color:var(--text);font-family:'JetBrains Mono',monospace;
+  font-size:15px;padding:6px 10px;text-align:center;outline:none;
+}
+.mini-input:focus{border-color:var(--purple2);}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:2rem;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--surface2);border:1px solid var(--border2);
+  color:var(--text);padding:10px 20px;
+  border-radius:10px;font-size:14px;
+  transition:transform 0.3s;z-index:200;
+  white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+@media(max-width:640px){
+  .metrics{grid-template-columns:repeat(3,1fr);}
+  .bolim-grid{grid-template-columns:1fr;}
+  .header{padding:1rem;}
+  .container{padding:1rem;}
+  .timer-big{font-size:44px;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-canvas">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="bg-canvas"><div class="orb orb1"></div><div class="orb orb2"></div></div>
+  <div class="login-card">
+    <div class="login-logo">🎯</div>
+    <div class="login-title">Ingliz tili 75 kun</div>
+    <div class="login-sub">Kirish uchun parolni tering</div>
+    <input type="password" class="login-input" id="pass-input" placeholder="Parol" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Kirish</button>
+    <div class="login-error" id="login-err">Parol noto'g'ri!</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo">75 KUN</div>
+      <div class="header-date" id="hdate"></div>
+    </div>
+    <div class="header-right">
+      <div class="streak-pill">⚡ <span id="hstreak">0</span> kun streak</div>
+      <button class="logout-btn" onclick="doLogout()">Chiqish</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="metrics">
+      <div class="metric"><div class="metric-val purple" id="m-day">1</div><div class="metric-label">Kun</div></div>
+      <div class="metric"><div class="metric-val green" id="m-streak">0</div><div class="metric-label">Streak</div></div>
+      <div class="metric"><div class="metric-val amber" id="m-words">2000</div><div class="metric-label">Jami so'z</div></div>
+      <div class="metric"><div class="metric-val blue" id="m-pct">0%</div><div class="metric-label">Progress</div></div>
+      <div class="metric"><div class="metric-val" id="m-left">75</div><div class="metric-label">Qoldi</div></div>
+    </div>
+
+    <div class="nav">
+      <button class="nav-btn active" onclick="showPanel('bugun')">Bugun</button>
+      <button class="nav-btn" onclick="showPanel('timer')">Timer</button>
+      <button class="nav-btn" onclick="showPanel('hafta')">Haftalik</button>
+      <button class="nav-btn" onclick="showPanel('foiz')">Tahlil</button>
+      <button class="nav-btn" onclick="showPanel('progress')">Progress</button>
+      <button class="nav-btn" onclick="showPanel('bolimlar')">Bo'limlar</button>
+      <button class="nav-btn" onclick="showPanel('eslatma')">Eslatma</button>
+    </div>
+
+    <!-- BUGUN -->
+    <div id="panel-bugun" class="panel active">
+      <div class="card">
+        <div class="card-title">📋 Bugungi vazifalar</div>
+        <div id="tasks-list"></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);">
+          <span style="font-size:14px;color:var(--muted);">Yodladim:</span>
+          <input type="number" class="mini-input" id="words-inp" min="0" max="300" value="0" onchange="S.wordsToday=+this.value;save()">
+          <span style="font-size:14px;color:var(--muted);">ta so'z</span>
+        </div>
+      </div>
+      <button class="btn-main" onclick="completeDay()">✓ Kunni yakunla</button>
+      <button class="btn-sec" onclick="resetDay()">Qayta boshlash</button>
+    </div>
+
+    <!-- TIMER -->
+    <div id="panel-timer" class="panel">
+      <div class="card">
+        <div class="card-title">⏱ 2 soatlik sessiya</div>
+        <div class="timer-big" id="timer-disp">2:00:00</div>
+        <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+        <div class="prog-txt" id="prog-txt">0% tugallandi</div>
+        <div class="timer-btns">
+          <button class="tbtn" id="play-btn" onclick="toggleTimer()">▶ Boshlash</button>
+          <button class="tbtn" onclick="resetTimer()">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HAFTALIK -->
+    <div id="panel-hafta" class="panel">
+      <div class="card">
+        <div class="card-title">📅 Bu haftadagi natijalar</div>
+        <div class="week-grid" id="week-grid"></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:1rem;">
+          <div class="stat-box"><div class="stat-val" id="w-done">0</div><div class="stat-label">Bajarildi</div></div>
+          <div class="stat-box"><div class="stat-val" id="w-words">0</div><div class="stat-label">So'zlar</div></div>
+          <div class="stat-box"><div class="stat-val" id="w-miss">0</div><div class="stat-label">O'tkazildi</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Oylik ko'rinish</div>
+        <div id="month-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;"></div>
+      </div>
+    </div>
+
+    <!-- FOIZ / TAHLIL -->
+    <div id="panel-foiz" class="panel">
+      <div class="card">
+        <div class="card-title">📈 O'rganish tahlili</div>
+        <div style="margin-bottom:1.5rem;">
+          <div class="foiz-label">Umumiy progress (75 kundan)</div>
+          <div class="foiz-bar"><div class="foiz-fill" id="f-progress" style="width:0%">0%</div></div>
+        </div>
+        <div style="margin-bottom:1.5rem;">
+          <div class="foiz-label">Streak samaradorligi</div>
+          <div class="foiz-bar"><div class="foiz-fill" id="f-streak" style="width:0%;background:linear-gradient(90deg,#4ade80,#22d3ee)">0%</div></div>
+        </div>
+        <div style="margin-bottom:1.5rem;">
+          <div class="foiz-label">So'z maqsadi (3750 ta)</div>
+          <div class="foiz-bar"><div class="foiz-fill" id="f-words" style="width:0%;background:linear-gradient(90deg,#fbbf24,#f97316)">0%</div></div>
+        </div>
+        <div>
+          <div class="foiz-label">Vazifalar bajarish foizi</div>
+          <div class="foiz-bar"><div class="foiz-fill" id="f-tasks" style="width:0%;background:linear-gradient(90deg,#f472b6,#a855f7)">0%</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏆 Rekordlar</div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="stat-val" id="r-streak">0</div><div class="stat-label">Eng uzun streak</div></div>
+          <div class="stat-box"><div class="stat-val" id="r-words">0</div><div class="stat-label">Eng ko'p so'z (1 kun)</div></div>
+          <div class="stat-box"><div class="stat-val" id="r-done">0</div><div class="stat-label">Jami bajarildi</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div id="panel-progress" class="panel">
+      <div class="card">
+        <div class="card-title">🗓 75 kunlik yo'l</div>
+        <div class="dots-wrap" id="dots-wrap"></div>
+        <div class="legend">
+          <span><span class="ld" style="background:var(--green)"></span>Bajarildi</span>
+          <span><span class="ld" style="background:var(--purple)"></span>Bugun</span>
+          <span><span class="ld" style="background:var(--red)"></span>O'tkazildi</span>
+          <span><span class="ld" style="background:var(--surface2);border:1px solid var(--hint)"></span>Kelgusi</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BO'LIMLAR -->
+    <div id="panel-bolimlar" class="panel">
+      <div id="bolim-list-view">
+        <div class="bolim-grid" id="bolim-grid"></div>
+        <div style="margin-top:10px;">
+          <button class="add-bolim" onclick="addBolim()">+ Yangi bo'lim qo'shish</button>
+        </div>
+      </div>
+      <div id="bolim-detail-view" style="display:none;">
+        <button class="back-btn" onclick="closeBolim()">← Orqaga</button>
+        <div class="card">
+          <div class="card-title" id="bd-title"></div>
+          <div id="bd-entries"></div>
+          <textarea class="note-area" id="bd-input" placeholder="Yozing..." style="margin-top:1rem;"></textarea>
+          <button class="btn-main" onclick="saveBolimEntry()">Saqlash</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESLATMA -->
+    <div id="panel-eslatma" class="panel">
+      <div class="card">
+        <div class="card-title">📝 Bugungi eslatma — Kun <span id="note-day-num">1</span></div>
+        <textarea class="note-area" id="note-inp" placeholder="Bugun nima o'rgandim, qiynaldim, savollarim..." oninput="S.notes['d'+S.day]=this.value;save()"></textarea>
+      </div>
+      <div class="card">
+        <div class="card-title">📚 Oldingi kunlar</div>
+        <div id="prev-notes"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MISSED MODAL -->
+<div class="modal-overlay" id="missed-modal">
+  <div class="modal">
+    <div class="modal-title">😔 Kecha o'tkazib yubordingizmi?</div>
+    <div class="modal-sub">Sababi nima edi? Bu kelajakda yordam beradi.</div>
+    <div class="reason-btns">
+      <button class="reason-btn" onclick="saveMissReason('Vaqt bo\'lmadi')">⏰ Vaqt bo'lmadi</button>
+      <button class="reason-btn" onclick="saveMissReason('Charchagan edim')">😴 Charchagan</button>
+      <button class="reason-btn" onclick="saveMissReason('Unutdim')">🤔 Unutdim</button>
+      <button class="reason-btn" onclick="saveMissReason('Boshqa ish')">📌 Boshqa ish</button>
+      <button class="reason-btn" onclick="saveMissReason('Kasal edim')">🤒 Kasal</button>
+      <button class="reason-btn" onclick="saveMissReason('Boshqa sabab')">💬 Boshqa</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PASSWORD = 'bekhruzbek75';
+const TOTAL = 75;
+const TASKS_DEF = [
+  {text:"50 ta yangi so'z yodla (Anki)",pts:"50 so'z"},
+  {text:"30 daqiqa ingliz audio yoki serial",pts:"30 daq"},
+  {text:"5 ta ingliz gapi yoz",pts:"5 gap"},
+  {text:"Kecha yodlaganlarni takrorla",pts:"takror"}
+];
+const DEFAULT_BOLIMLAR = [
+  {id:'hayot',icon:'🏠',name:'Kundalik hayot',desc:'Kunlik voqealar, fikrlar',entries:[]},
+  {id:'vocab',icon:'📖',name:'Yangi so\'zlar',desc:'Yodlagan so\'zlarim',entries:[]},
+  {id:'grammar',icon:'✏️',name:'Grammatika',desc:'O\'rgangan zamonlar',entries:[]},
+  {id:'speaking',icon:'🗣',name:'Speaking',desc:'Gapirish mashqlari',entries:[]}
+];
+
+let S = {
+  day:1, streak:0, longestStreak:0,
+  completedDays:[], missedDays:[], missReasons:{},
+  tasksDone:[false,false,false,false],
+  wordsToday:0, totalWords:2000,
+  wordsPerDay:{}, totalTasksDone:0, totalTasksPossible:0,
+  bestWordsDay:0, notes:{},
+  bolimlar: JSON.parse(JSON.stringify(DEFAULT_BOLIMLAR)),
+  lastDate:''
+};
+
+let activeBolimId = null;
+let timerSec = 7200, timerOn = false, timerInt = null;
+
+function load(){
+  try{const d=localStorage.getItem('eng75_v3');if(d)S=Object.assign(S,JSON.parse(d));}catch(e){}
+  checkNewDay();
+}
+
+function save(){
+  try{localStorage.setItem('eng75_v3',JSON.stringify(S));}catch(e){}
+}
+
+function checkNewDay(){
+  const today = new Date().toDateString();
+  if(S.lastDate && S.lastDate !== today){
+    const pd = S.day;
+    if(!S.completedDays.includes(pd)){
+      S.missedDays.push(pd);
+      S.streak = 0;
+      showMissedModal();
+    }
+    S.wordsToday=0;
+    S.tasksDone=[false,false,false,false];
+    if(!S.completedDays.includes(pd) && pd < TOTAL) S.day++;
+  }
+  S.lastDate = new Date().toDateString();
+  save();
+}
+
+function showMissedModal(){
+  document.getElementById('missed-modal').classList.add('show');
+}
+
+function saveMissReason(r){
+  S.missReasons['d'+(S.day-1)] = r;
+  save();
+  document.getElementById('missed-modal').classList.remove('show');
+  showToast('Sabab saqlandi. Bugun zo\'r qiling! 💪');
+}
+
+function doLogin(){
+  const v = document.getElementById('pass-input').value;
+  if(v === PASSWORD){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    load();
+    updateUI();
+  } else {
+    document.getElementById('login-err').style.display='block';
+    document.getElementById('pass-input').value='';
+    setTimeout(()=>document.getElementById('login-err').style.display='none',2000);
+  }
+}
+
+function doLogout(){
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('pass-input').value='';
+}
+
+function showPanel(name){
+  const panels=['bugun','timer','hafta','foiz','progress','bolimlar','eslatma'];
+  panels.forEach(p=>{
+    document.getElementById('panel-'+p).classList.toggle('active',p===name);
+  });
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>{
+    b.classList.toggle('active',panels[i]===name);
+  });
+  if(name==='progress') renderDots();
+  if(name==='hafta') renderWeek();
+  if(name==='foiz') renderFoiz();
+  if(name==='eslatma') renderNotes();
+  if(name==='bolimlar') renderBolimlar();
+}
+
+function toggleTask(i){
+  S.tasksDone[i]=!S.tasksDone[i];
+  save(); renderTasks();
+}
+
+function completeDay(){
+  if(!S.tasksDone.every(Boolean)){showToast('Avval barcha vazifalarni bajaring!');return;}
+  if(S.completedDays.includes(S.day)){showToast('Bu kun allaqachon bajarilgan!');return;}
+  S.completedDays.push(S.day);
+  S.streak++;
+  if(S.streak>S.longestStreak)S.longestStreak=S.streak;
+  S.wordsPerDay['d'+S.day]=S.wordsToday;
+  if(S.wordsToday>S.bestWordsDay)S.bestWordsDay=S.wordsToday;
+  S.totalWords += S.wordsToday;
+  S.totalTasksDone += S.tasksDone.filter(Boolean).length;
+  S.totalTasksPossible += 4;
+  if(S.day<TOTAL)S.day++;
+  S.tasksDone=[false,false,false,false];
+  S.wordsToday=0;
+  save(); updateUI();
+  showToast('Barakalla! '+S.streak+' kunlik streak! 🔥');
+}
+
+function resetDay(){
+  S.tasksDone=[false,false,false,false];
+  S.wordsToday=0;
+  save(); renderTasks();
+  document.getElementById('words-inp').value=0;
+}
+
+function renderTasks(){
+  const list=document.getElementById('tasks-list');
+  list.innerHTML='';
+  TASKS_DEF.forEach((t,i)=>{
+    const done=S.tasksDone[i];
+    const row=document.createElement('div');
+    row.className='task-row';
+    row.onclick=()=>toggleTask(i);
+    row.innerHTML=`<div class="cb ${done?'done':''}"></div><div class="task-text ${done?'done':''}">${t.text}</div><div class="task-pts">${t.pts}</div>`;
+    list.appendChild(row);
+  });
+  document.getElementById('words-inp').value=S.wordsToday;
+}
+
+function renderDots(){
+  const wrap=document.getElementById('dots-wrap');
+  wrap.innerHTML='';
+  for(let i=1;i<=TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='dot';
+    const missReason = S.missReasons['d'+i]?` (${S.missReasons['d'+i]})`:'';
+    d.setAttribute('data-tip','Kun '+i+(S.completedDays.includes(i)?' ✓':S.missedDays.includes(i)||i<S.day?missReason:''));
+    if(S.completedDays.includes(i))d.classList.add('d-done');
+    else if(i===S.day)d.classList.add('d-today');
+    else if(S.missedDays.includes(i)||i<S.day)d.classList.add('d-missed');
+    else d.classList.add('d-skip');
+    wrap.appendChild(d);
+  }
+}
+
+function renderWeek(){
+  const days=['Du','Se','Ch','Pa','Ju','Sh','Ya'];
+  const today=new Date();
+  const dow=today.getDay();
+  const monOffset=(dow===0?-6:1-dow);
+  const grid=document.getElementById('week-grid');
+  grid.innerHTML='';
+  let wDone=0,wWords=0,wMiss=0;
+  for(let i=0;i<7;i++){
+    const d=new Date(today);
+    d.setDate(today.getDate()+monOffset+i);
+    const dayNum = S.day-(today.getDate()-d.getDate());
+    const isDone=S.completedDays.includes(dayNum);
+    const isMiss=S.missedDays.includes(dayNum)||(dayNum<S.day&&!isDone&&dayNum>0);
+    const w=S.wordsPerDay['d'+dayNum]||0;
+    if(isDone){wDone++;wWords+=w;}
+    if(isMiss)wMiss++;
+    const isToday=d.toDateString()===today.toDateString();
+    const box=document.createElement('div');
+    box.className='week-day';
+    if(isToday)box.style.border='1px solid var(--purple2)';
+    box.innerHTML=`<div class="week-day-name">${days[i]}</div><div class="week-day-val ${isDone?'':''}${isMiss?'miss':''}">${isDone?w||'✓':isMiss?'✗':'-'}</div>`;
+    grid.appendChild(box);
+  }
+  document.getElementById('w-done').textContent=wDone;
+  document.getElementById('w-words').textContent=wWords;
+  document.getElementById('w-miss').textContent=wMiss;
+
+  const mg=document.getElementById('month-grid');
+  mg.innerHTML='';
+  for(let i=1;i<=TOTAL;i++){
+    const d=document.createElement('div');
+    d.style.cssText='height:12px;border-radius:2px;';
+    if(S.completedDays.includes(i))d.style.background='var(--green)';
+    else if(S.missedDays.includes(i)||i<S.day)d.style.background='var(--red)';
+    else if(i===S.day)d.style.background='var(--purple)';
+    else d.style.background='var(--surface2)';
+    mg.appendChild(d);
+  }
+}
+
+function renderFoiz(){
+  const progPct=Math.round(S.completedDays.length/TOTAL*100);
+  const streakPct=Math.round((S.completedDays.length>0?(S.streak/S.completedDays.length):0)*100);
+  const wordsPct=Math.min(100,Math.round((S.totalWords-2000)/3750*100));
+  const tasksPct=S.totalTasksPossible>0?Math.round(S.totalTasksDone/S.totalTasksPossible*100):0;
+
+  setBar('f-progress',progPct);
+  setBar('f-streak',Math.min(100,streakPct));
+  setBar('f-words',Math.max(0,wordsPct));
+  setBar('f-tasks',tasksPct);
+
+  document.getElementById('r-streak').textContent=S.longestStreak;
+  document.getElementById('r-words').textContent=S.bestWordsDay;
+  document.getElementById('r-done').textContent=S.completedDays.length;
+}
+
+function setBar(id,pct){
+  const el=document.getElementById(id);
+  el.style.width=pct+'%';
+  el.textContent=pct+'%';
+}
+
+function renderNotes(){
+  document.getElementById('note-day-num').textContent=S.day;
+  document.getElementById('note-inp').value=S.notes['d'+S.day]||'';
+  const prev=document.getElementById('prev-notes');
+  const keys=Object.keys(S.notes).filter(k=>k!=='d'+S.day&&S.notes[k]).slice(-5).reverse();
+  if(!keys.length){prev.innerHTML='<div style="color:var(--hint);font-size:14px;">Hali eslatmalar yo\'q.</div>';return;}
+  prev.innerHTML=keys.map(k=>{
+    const dn=k.replace('d','');
+    const miss=S.missReasons['d'+dn]?`<span style="color:var(--red);font-size:11px;">Sabab: ${S.missReasons['d'+dn]}</span>`:'';
+    return `<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border);">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">
+        <span style="font-size:12px;color:var(--purple);">Kun ${dn}</span>${miss}
+      </div>
+      <div style="font-size:14px;color:var(--muted);">${S.notes[k]}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderBolimlar(){
+  if(!S.bolimlar)S.bolimlar=JSON.parse(JSON.stringify(DEFAULT_BOLIMLAR));
+  const grid=document.getElementById('bolim-grid');
+  grid.innerHTML='';
+  S.bolimlar.forEach(b=>{
+    const c=document.createElement('div');
+    c.className='bolim-card';
+    c.onclick=()=>openBolim(b.id);
+    c.innerHTML=`<div class="bolim-icon">${b.icon}</div><div class="bolim-name">${b.name}</div><div class="bolim-desc">${b.desc} · ${b.entries.length} yozuv</div>`;
+    grid.appendChild(c);
+  });
+}
+
+function openBolim(id){
+  activeBolimId=id;
+  const b=S.bolimlar.find(x=>x.id===id);
+  document.getElementById('bolim-list-view').style.display='none';
+  document.getElementById('bolim-detail-view').style.display='block';
+  document.getElementById('bd-title').textContent=b.icon+' '+b.name;
+  document.getElementById('bd-input').value='';
+  renderBolimEntries(b);
+}
+
+function renderBolimEntries(b){
+  const c=document.getElementById('bd-entries');
+  if(!b.entries.length){c.innerHTML='<div style="color:var(--hint);font-size:14px;padding:8px 0;">Hali yozuv yo\'q.</div>';return;}
+  c.innerHTML=b.entries.slice(-10).reverse().map(e=>`
+    <div class="hayot-entry">
+      <div class="hayot-entry-date">${e.date} — Kun ${e.day}</div>
+      <div class="hayot-entry-text">${e.text}</div>
+    </div>
+  `).join('');
+}
+
+function saveBolimEntry(){
+  const txt=document.getElementById('bd-input').value.trim();
+  if(!txt){showToast('Biror narsa yozing!');return;}
+  const b=S.bolimlar.find(x=>x.id===activeBolimId);
+  b.entries.push({text:txt,date:new Date().toLocaleDateString('uz-UZ'),day:S.day});
+  save();
+  document.getElementById('bd-input').value='';
+  renderBolimEntries(b);
+  showToast('Saqlandi!');
+}
+
+function closeBolim(){
+  activeBolimId=null;
+  document.getElementById('bolim-list-view').style.display='block';
+  document.getElementById('bolim-detail-view').style.display='none';
+  renderBolimlar();
+}
+
+function addBolim(){
+  const name=prompt('Yangi bo\'lim nomi:');
+  if(!name)return;
+  const icon=prompt('Emoji belgisi (masalan: 🎵):') || '📁';
+  const desc=prompt('Qisqacha tavsif:') || '';
+  S.bolimlar.push({id:'b'+Date.now(),icon,name,desc,entries:[]});
+  save(); renderBolimlar();
+  showToast('Bo\'lim qo\'shildi!');
+}
+
+function toggleTimer(){
+  if(timerOn){
+    clearInterval(timerInt);timerOn=false;
+    document.getElementById('play-btn').textContent='▶ Davom ettir';
+    document.getElementById('play-btn').classList.remove('on');
+  } else {
+    timerOn=true;
+    document.getElementById('play-btn').textContent='⏸ To\'xtat';
+    document.getElementById('play-btn').classList.add('on');
+    timerInt=setInterval(()=>{
+      if(timerSec>0){timerSec--;updateTimerDisp();}
+      else{
+        clearInterval(timerInt);timerOn=false;
+        document.getElementById('play-btn').textContent='✓ Tugadi!';
+        showToast('2 soat tugadi! Zo\'r eding! 🎉');
+      }
+    },1000);
+  }
+}
+
+function resetTimer(){
+  clearInterval(timerInt);timerOn=false;timerSec=7200;
+  document.getElementById('play-btn').textContent='▶ Boshlash';
+  document.getElementById('play-btn').classList.remove('on');
+  updateTimerDisp();
+}
+
+function updateTimerDisp(){
+  const h=Math.floor(timerSec/3600);
+  const m=Math.floor((timerSec%3600)/60);
+  const sec=timerSec%60;
+  document.getElementById('timer-disp').textContent=h+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+  const pct=Math.round((7200-timerSec)/7200*100);
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-txt').textContent=pct+'% tugallandi';
+}
+
+function updateUI(){
+  const left=Math.max(0,TOTAL-S.day+1);
+  const pct=Math.round(S.completedDays.length/TOTAL*100);
+  document.getElementById('m-day').textContent=S.day;
+  document.getElementById('m-streak').textContent=S.streak;
+  document.getElementById('m-words').textContent=S.totalWords.toLocaleString();
+  document.getElementById('m-pct').textContent=pct+'%';
+  document.getElementById('m-left').textContent=left;
+  document.getElementById('hstreak').textContent=S.streak;
+  document.getElementById('hdate').textContent=new Date().toLocaleDateString('uz-UZ',{weekday:'long',day:'numeric',month:'long'});
+  renderTasks();
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
